@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saatoshi_Rising</title>
+<style>
+  :root{
+    --bg:#08090b;
+    --hex-dim:#262a30;
+    --btc:#f7931a;
+    --signal:#00e6c3;
+    --paper:#eae6da;
+    --paper-dim:#8b8779;
+    --line:#1c1f24;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', Helvetica, Arial, sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:80px 24px;
+    position:relative;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--btc);color:#08090b;}
+
+  .keyspace-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+    opacity:0.45;
+    pointer-events:none;
+  }
+  .hexrain{
+    position:absolute;
+    top:0;
+    font-family:'JetBrains Mono','SF Mono','Courier New',monospace;
+    font-size:13px;
+    line-height:1.5;
+    color:var(--hex-dim);
+    white-space:pre;
+    animation:fall linear infinite;
+  }
+  @keyframes fall{
+    from{transform:translateY(-100%);}
+    to{transform:translateY(100vh);}
+  }
+
+  main{
+    position:relative;
+    z-index:1;
+    max-width:720px;
+    width:100%;
+    text-align:center;
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--btc);
+    margin-bottom:24px;
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+  }
+  .eyebrow::before, .eyebrow::after{
+    content:"";
+    width:26px;height:1px;
+    background:var(--btc);
+  }
+
+  h1{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:clamp(38px, 7vw, 64px);
+    line-height:1.15;
+    color:var(--paper);
+  }
+  h1 .accent{color:var(--btc);}
+
+  .line{
+    margin-top:22px;
+    font-size:19px;
+    line-height:1.6;
+    color:var(--paper-dim);
+  }
+  .line strong{color:var(--paper);font-weight:600;}
+
+  .video-wrap{
+    margin-top:56px;
+    position:relative;
+    border:1px solid var(--line);
+    background:#000;
+  }
+  .video-wrap::before{
+    content:"";
+    position:absolute;
+    top:-1px;left:-1px;right:-1px;
+    height:2px;
+    background:linear-gradient(90deg, var(--btc), var(--signal));
+  }
+  .video-frame{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+  }
+  .video-frame iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+
+  footer{
+    margin-top:48px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.05em;
+    color:var(--hex-dim);
+  }
+  footer span{color:var(--btc);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="keyspace-bg" id="keyspaceBg"></div>
+
+<main>
+  <div class="eyebrow">1000 BTC Puzzle solution</div>
+  <h1>Hi, I'm <span class="accent">saatoshi_rising</span>.</h1>
+  <p class="line">It wasn't meant to be brute-forced. Get private key of puzzle 71 by contributing $5000 to the next puzzles. Use the QR in the video to contribute</p>
+
+  <div class="video-wrap">
+    <div class="video-frame">
+      <iframe src="https://www.youtube.com/embed/fkcAoitFuRI?si=aZHSfK95KLF-InB-" title="Saatoshi_Rising" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <footer>Saatoshi_Rising<span>.</span></footer>
+</main>
+
+<script>
+  const bg = document.getElementById('keyspaceBg');
+  const chars = '0123456789abcdef';
+  const columns = Math.floor(window.innerWidth / 60);
+  for(let i=0;i<columns;i++){
+    const col = document.createElement('div');
+    col.className = 'hexrain';
+    col.style.left = (i*60 + Math.random()*20) + 'px';
+    col.style.animationDuration = (14 + Math.random()*18) + 's';
+    col.style.animationDelay = (-Math.random()*20) + 's';
+    let text = '';
+    for(let l=0;l<40;l++){
+      let line = '';
+      for(let c=0;c<2;c++){
+        line += chars[Math.floor(Math.random()*16)];
+      }
+      text += line + '\n';
+    }
+    col.textContent = text;
+    bg.appendChild(col);
+  }
+</script>
+
+</body>
+</html>
